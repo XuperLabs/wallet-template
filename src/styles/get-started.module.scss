@@ -1,0 +1,118 @@
+.wrapper {
+	background-image: url("./../../public/get-started.svg");
+	height: 100vh;
+	width: 100%;
+	background-repeat: no-repeat;
+	background-size: cover;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	.form {
+		border-radius: 32px;
+		background: #0e0e0e;
+		min-height: 700px !important;
+		padding: 30px 50px;
+		position: relative;
+
+		display: flex;
+		align-items: center;
+		justify-content: left;
+		width: 550px;
+
+		.start {
+			color: #fff;
+			font-family: Poppins;
+			font-size: 34px;
+			font-style: normal;
+			font-weight: 500;
+			line-height: 48px;
+			text-align: left;
+		}
+
+		.sec {
+			color: #666464;
+			margin-top: 15px;
+			font-family: Poppins;
+			font-size: 14px;
+			font-style: normal;
+			font-weight: 500;
+			line-height: normal;
+			margin-bottom: 20px;
+
+			@media (max-width:600px){
+				margin-top: 50px;
+			}
+		}
+		label {
+			color: #84818a;
+			font-family: Poppins;
+			font-size: 12px;
+			font-style: normal;
+			font-weight: 400;
+			line-height: 17px;
+			// margin-top: 40px !important;
+		}
+		input {
+			border: none !important;
+			min-width: 100%;
+			background-color: transparent;
+			color: #666464;
+			font-family: Poppins;
+			font-size: 14px;
+			font-style: normal;
+			font-weight: 500;
+			line-height: normal;
+			padding: 5px 3px;
+			border-bottom: 1px solid #4270aa !important;
+			margin-top: 10px;
+			::placeholder {
+				color: #fff !important ;
+			}
+		}
+		input:focus {
+			outline: 0px;
+		}
+
+		.control {
+			display: flex;
+			align-items: flex-start;
+			justify-content: space-between;
+			margin-top: 30px;
+
+			.help {
+				color: #fff;
+				font-family: Poppins;
+				font-size: 13px;
+				font-style: normal;
+				font-weight: 400;
+				line-height: normal;
+			}
+
+			button {
+				display: flex;
+				padding: 12px 24px;
+				justify-content: center;
+				align-items: center;
+				gap: 8px;
+				color: #fff;
+				border-radius: 50px;
+				background: linear-gradient(90deg, #4776e6 0%, #4b77ae 100%);
+				box-shadow: 4px 6px 61px 0px rgba(99, 104, 231, 0.2);
+				border: none;
+			}
+			@media (max-width:600px) {
+				margin-top: 60px;
+			}
+		}
+
+		@media (max-width:600px) {
+			margin-top: 50%;
+			padding: 20px 20px;
+		}
+	}
+
+	@media (max-width: 600px) {
+		
+	}
+}
