@@ -6,6 +6,7 @@ import "@mantine/notifications/styles.css"
 
 import { MantineProvider, createTheme } from "@mantine/core";
 import { colors } from "@/theme/colors";
+import { Notifications } from "@mantine/notifications";
 
 
 export const XUPER_API_KEY = "test_2a709364a2b197e2d2e74dfbeb5a98aeef6751248bde103d443e16ded48591ce"
@@ -27,6 +28,7 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <MantineProvider theme={theme}>
       <Component {...pageProps} />
+      <Notifications position="top-center" />
     </MantineProvider>
   );
 }

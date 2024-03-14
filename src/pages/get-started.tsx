@@ -86,10 +86,8 @@ export default function Login() {
 
     return (
         <div className={classes.wrapper}>
-            {/* <HeadMeta pageName="Login" /> */}
             <div >
                 <div className={classes.form}>
-                    <LoadingOverlay visible={visible} />
                     <div style={{ width: "100%" }}>
 
                         <p className={classes.start}>welcome</p>
@@ -116,7 +114,7 @@ export default function Login() {
 
                         <div className={classes.control}>
                             <p className={classes.help}>Need help?</p>
-                            <Button onClick={handleSubmit} variant="unstyled"><Text fz={14}>Continue</Text></Button>
+                            <Button loading={visible} loaderProps={{ type: "dots" }} onClick={handleSubmit} variant="unstyled"><Text fz={14}>Continue</Text></Button>
                         </div>
                     </div>
                 </div>
