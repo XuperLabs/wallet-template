@@ -4,6 +4,7 @@ import DIA from "@/assets/DIA.png";
 import OP from "@/assets/OP.png";
 import USDT from "@/assets/usdt.svg";
 import POLYGON from "@/assets/POLYGON.png";
+import BSC from "@/assets/BSC.svg";
 
 export const Tokens = [
 	{
@@ -15,6 +16,11 @@ export const Tokens = [
 		token: "MATIC",
 		chain: "POLY",
 		Icon: POLYGON,
+	},
+	{
+		token: "BNB",
+		chain: "BSC",
+		Icon: BSC,
 	},
 	{
 		token: "ETHEREUM",

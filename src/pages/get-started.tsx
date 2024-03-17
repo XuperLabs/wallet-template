@@ -36,10 +36,12 @@ import classes from "@/styles/get-started.module.scss"
 import { GetServerSideProps } from "next";
 import { baseUrl } from "@/contants/baseUrl";
 import { XUPER_API_KEY } from "./_app";
+import User from "@/store/user.store";
 
 
 export default function Login() {
     const router = useRouter();
+    const { user } = User()
 
     const [visible, setVisible] = useState(false);
     const [error, setError] = useState("");
@@ -84,6 +86,9 @@ export default function Login() {
         }
     };
 
+    if (user?.wallet_address) {
+        router.push("/")
+    }
     return (
         <div className={classes.wrapper}>
             <div >

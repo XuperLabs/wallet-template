@@ -1,13 +1,25 @@
 import Image from "next/image";
 import classes from "@/styles/tokens.module.scss";
-import { Button, Center, CopyButton, Group, Text } from "@mantine/core";
+import { Button, Center, CopyButton, Group, Text, ThemeIcon } from "@mantine/core";
 import POLY from "@/assets/poly.svg"
 import User from "@/store/user.store";
 import QRCode from "react-qr-code";
+import { useSearchParams } from "next/navigation";
+import { Tokens } from "@/utils/tokens";
+import { IconChevronDownLeft, IconChevronLeft } from "@tabler/icons-react";
+import { useRouter } from "next/router";
+import Link from "next/link";
 
 export default function Token() {
 
     const { user } = User()
+
+    const searchParams = useSearchParams();
+    const token = searchParams.get('token');
+    const chain = searchParams.get('chain');
+    const router = useRouter()
+
+    const item = Tokens.find((x: any) => x.token === token);
 
 
     if (!user?.wallet_address) return null
@@ -15,11 +27,16 @@ export default function Token() {
     return (
         <div className={classes.wrapper}>
             <div className={classes.card}>
+                <ThemeIcon style={{
+                    cursor: "pointer",
+                }} radius={"50%"} size={40} onClick={() => router.back()} >
+                    <IconChevronLeft size={20} />
+                </ThemeIcon>
                 <div className={classes.icon_card}>
                     <div>
-                        {/* <Center><Image src={POLY.src} alt={"usdt"} width={90} height={90} /></Center> */}
-                        <Text ta={"center"} fw={600} fz={14} c={"white"} mt={20}>MATIC</Text>
-                        <Text ta={"center"} fw={500} fz={14} c={"dimmed"} mt={10}>POLY</Text>
+                        <Center><Image src={item?.Icon.src} alt={"usdt"} width={90} height={90} /></Center>
+                        <Text ta={"center"} fw={600} fz={14} c={"white"} mt={20}>{token}</Text>
+                        <Text ta={"center"} fw={500} fz={14} c={"dimmed"} mt={10}>{chain}</Text>
                         <Text ta={"center"} mt={20} fz={14}>Receive</Text>
                         <Center mt={30}>
                             <QRCode value={user?.wallet_address!} size={150}

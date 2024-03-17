@@ -9,6 +9,7 @@ import CAKE from "@/assets/CAKE.png"
 import DIA from "@/assets/DIA.png"
 import OP from "@/assets/OP.png"
 import USDT from "@/assets/USDT.png"
+import BSC from "@/assets/BSC.svg"
 import POLYGON from "@/assets/POLYGON.png"
 import { GetServerSideProps } from "next";
 import axios from "axios"
@@ -44,9 +45,9 @@ export default function Home({ data }: PageProps) {
 
   const mockdata = [
     {
-      token: "Tether USD",
+      token: "USDT",
       chain: "USDT",
-      token_name: "USDT",
+      token_name: "Tether USD",
       price: `${formatPrice("1.01", "USD")}`,
       icon: USDT.src,
     },
@@ -58,11 +59,19 @@ export default function Home({ data }: PageProps) {
       icon: ETH.src,
     },
     {
-      token: "Polygon",
-      chain: "MATIC",
-      token_name: "POLY",
+      token: "BNB",
+      chain: "BSC",
+      token_name: "BNB",
+      price: `${formatPrice(data.pairs?.find(item => item?.pair == "BNB/USD")?.price!, "USD")}`,
+      icon: BSC.src,
+    },
+    {
+      token: "MATIC",
+      chain: "POLY",
+      token_name: "Polygon",
       price: `${formatPrice(data.pairs?.find(item => item?.pair == "MATIC/USD")?.price!, "USD")}`,
       icon: POLYGON.src,
+      link: "/tokens/matic"
     },
     {
       token: "Optimism",
@@ -104,7 +113,7 @@ export default function Home({ data }: PageProps) {
 
         <div className={classes.list}>
           {mockdata.map((item, index) => (
-            <Link key={index} href={`/token?token=${item.token_name}`}>
+            <Link key={index} href={`/tokens?chain=${item.chain}&token=${item.token}`}>
               <Group justify="space-between" w={"100%"} mt={15} >
                 <Flex align="center" gap={20}>
                   <Image src={item.icon} alt="etherum" width={30} height={30} />

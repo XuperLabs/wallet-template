@@ -2,7 +2,7 @@ import Head from "next/head";
 import Image from "next/image";
 import { Inter } from "next/font/google";
 import classes from "@/styles/tokens.module.scss";
-import { Button, Center, Flex, Group, Text, ThemeIcon } from "@mantine/core";
+import { Button, Center, Flex, Group, Skeleton, Text, ThemeIcon } from "@mantine/core";
 import { GetServerSideProps } from "next";
 import axios from "axios"
 import { useEffect, useState } from "react";
@@ -15,16 +15,27 @@ import { Web3 } from "web3";
 import dayjs from "dayjs";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
+import { Tokens } from "@/utils/tokens";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Token() {
 
-    const { user } = User()
+    const { user } = User();
+
+    const searchParams = useSearchParams()
+    const token = searchParams.get('token');
+    const chain = searchParams.get('chain');
 
     const [transactions, setTransactions] = useState([])
     const [balance, setBalance] = useState("");
     const router = useRouter()
+    const [resolved, setResolved] = useState(false);
+    const [loading, setLoading] = useState(false);
+
+    const item = Tokens.find((x: any) => x.token === token);
+    console.log(item)
     useEffect(() => {
         if (!user?.wallet_address) {
             router.push("/get-started")
@@ -35,16 +46,17 @@ export default function Token() {
         const fetchTransactions = async () => {
 
             try {
+                setLoading(true);
                 const result = await Promise.all([
-                    await axios.get(`${baseUrl}/customer/transactions?wallet=${user?.wallet_address}&chain=poly`, {
+                    await axios.get(`${baseUrl}/customer/transactions?wallet=${user?.wallet_address}&chain=${chain?.toLocaleLowerCase()}`, {
                         headers: {
                             "x-superauth-key": `${XUPER_API_KEY}`,
                         },
                     }),
                     await axios.post(`${baseUrl}/customer/get-balance`, {
                         address: user?.wallet_address,
-                        token: "matic",
-                        chain: "poly"
+                        token: token?.toLocaleLowerCase(),
+                        chain: chain?.toLocaleLowerCase()
                     }, {
                         headers: {
                             "x-superauth-key": `${XUPER_API_KEY}`,
@@ -62,27 +74,39 @@ export default function Token() {
             } catch (error) {
                 console.log(error);
             }
+            finally {
+                setLoading(false);
+            }
         }
 
         fetchTransactions()
     }, [user])
+
+    if (loading) return (
+        <div className={classes.wrapper}>
+            <div className={classes.card} style={{ height: "80vh" }}>
+
+            </div>
+        </div >
+    )
 
     return (
         <div className={classes.wrapper}>
             <div className={classes.card}>
                 <div className={classes.icon_card}>
                     <div>
-                        <Center><Image src={POLY.src} alt={"usdt"} width={90} height={90} /></Center>
-                        <Text ta={"center"} fw={600} fz={14} c={"white"} mt={20}>MATIC</Text>
-                        <Text ta={"center"} fw={500} fz={14} c={"dimmed"} mt={10}>POLY</Text>
+                        <Center><Image src={item?.Icon.src!} alt={"usdt"} width={90} height={90} /></Center>
+                        <Text ta={"center"} fw={600} fz={14} c={"white"} mt={20}>{item?.chain}</Text>
+                        <Text ta={"center"} fw={500} fz={14} c={"dimmed"} mt={10}>{item?.token}</Text>
                         <div className={classes.action_card}>
-                            <Text ta={"center"} fw={600} fz={14}>{balance} <Text fz={11} component="span" c={"dimmed"} fw={400}>Matic</Text></Text>
+                            <Text ta={"center"} fw={600} fz={14}>{`${balance || "0"} `} <Text fz={11} component="span" c={"dimmed"} fw={400}>{item?.token}</Text></Text>
                         </div>
                         <Flex align="center" justify="center" gap={10} mt={20}>
-                            <Button component={Link} href={"/tokens/matic/send"} size="sm" radius={20} w={100} fz={10} style={{ border: "1px solid #FFFFFF0F" }}>
+                            <Button component={Link} href={`/tokens/send?token=${token}&chain=${chain}&type=send`} size="sm" radius={20} w={100} fz={10} style={{ border: "1px solid #FFFFFF0F" }}>
                                 Send
                             </Button>
-                            <Button component={Link} href={"/tokens/matic/receive"} size="sm" radius={20} w={100} fz={12} style={{ border: "1px solid #FFFFFF0F" }}>
+                            <Button component={Link} href={`/tokens/receive?token=${token}&chain=${chain}&type=receive`}
+                                size="sm" radius={20} w={100} fz={12} style={{ border: "1px solid #FFFFFF0F" }}>
                                 Receive
                             </Button>
                         </Flex>

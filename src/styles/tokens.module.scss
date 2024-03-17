@@ -38,7 +38,7 @@
 
   .card{
     width: 400px;
-    height: 90vh;
+    // height: 90vh;
     background: #0e0e0e;
     border-radius: 32px;
     padding: 20px 20px;
@@ -72,7 +72,7 @@
       color: #fff;
       overflow-y: scroll !important;
       overflow-x: hidden !important;
-      height: calc(100vh  - 350px);
+      height: calc(100vh  - 450px);
       overflow-y: scroll;
       @include scrollbar();
 
