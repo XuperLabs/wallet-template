@@ -17,6 +17,7 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { Tokens } from "@/utils/tokens";
 import { useSearchParams } from "next/navigation";
+import { XUPER_API_KEY } from "./_app";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -66,7 +67,11 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
     try {
         const responses = await Promise.all([
-            axios.post(`https://app.xuperauth.com/api/v1/misc/get_list_pairs`, { pairs: ["BNB/USD", "ETH/USD", "MATIC/USD", "AVAX/USD", "FTM/USD", "BTC/USD", "USDT/USD", "DAI/USD"] })
+            axios.post(`https://app.xuperauth.com/api/v1/misc/get_list_pairs`, { pairs: ["BNB/USD", "ETH/USD", "MATIC/USD", "AVAX/USD", "FTM/USD", "BTC/USD", "USDT/USD", "DAI/USD"] }, {
+                headers: {
+                    "x-superauth-key": `${XUPER_API_KEY}`,
+                },
+            })
         ]);
 
         const pairs = responses[0].data.data;
