@@ -128,6 +128,7 @@ export default function Transfer() {
 
             handleSuccess("Transaction Completed successfully", "Transaction Completed successfully")
             setStep(2);
+            router.back();
         } catch (error: any) {
             console.log(error)
             handleError("Transaction failed", `${error?.response?.data?.message || "Transaction failed"}`)

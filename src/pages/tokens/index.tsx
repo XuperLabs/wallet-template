@@ -24,7 +24,7 @@ export default function Token() {
 
     const { user } = User();
 
-    const searchParams = useSearchParams()
+    const searchParams = useSearchParams();
     const token = searchParams.get('token');
     const chain = searchParams.get('chain');
 
